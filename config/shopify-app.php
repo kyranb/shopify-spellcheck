@@ -131,7 +131,7 @@ return [
     |
     */
 
-    'api_scopes' => env('SHOPIFY_API_SCOPES', 'read_products,write_products'),
+    'api_scopes' => env('SHOPIFY_API_SCOPES', 'read_locales,read_translations,read_products,write_products,read_content,write_content'),
 
     /*
     |--------------------------------------------------------------------------
@@ -271,13 +271,15 @@ return [
     */
 
     'webhooks' => [
-        /*
-            [
+                    [
                 'topic' => env('SHOPIFY_WEBHOOK_1_TOPIC', 'orders/create'),
                 'address' => env('SHOPIFY_WEBHOOK_1_ADDRESS', 'https://some-app.com/webhook/orders-create')
             ],
-            ...
-        */
+            [
+                'topic' => env('SHOPIFY_WEBHOOK_1_TOPIC', 'app/uninstalled'),
+                'address' => env('SHOPIFY_WEBHOOK_1_ADDRESS', 'https://(your-domain).com/webhook/app-uninstalled')
+            ]
+        
     ],
 
     /*
@@ -312,12 +314,10 @@ return [
     */
 
     'after_authenticate_job' => [
-        /*
-            [
-                'job' => env('AFTER_AUTHENTICATE_JOB'), // example: \App\Jobs\AfterAuthorizeJob::class
-                'inline' => env('AFTER_AUTHENTICATE_JOB_INLINE', false) // False = dispatch job for later, true = dispatch immediately
-            ],
-        */
+       [
+                'job' => \App\Jobs\AfterAuthenticateJob::class, // example: \App\Jobs\AfterAuthenticateJob::class
+                'inline' => env('AFTER_AUTHENTICATE_JOB_INLINE', true) // False = dispatch job for later, true = dispatch immediately
+            ]
     ],
 
     /*
